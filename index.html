@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+        <p id="error"></p>
+      <h1>Sign up</h1>
+
+      <!-- Login Section -->
+      <form id="loginForm">
+        <input type="text" id="name" placeholder="Name" required />
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+          minlength="8"
+        />
+        <button type="submit">Create account</button>
+      </form>
+      <a href="login.html" id="link">Already have an account?Sign in</a>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
