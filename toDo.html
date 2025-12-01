@@ -1,132 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do List App</title>
-    <link rel="stylesheet" href="index.css" />
-    <style>
-      .container2 {
-        max-width: 1000px;
-        width: 90%;
-        height: 70%;
-        margin: 50px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        gap: 30px;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do App</title>
+<style>
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f3f5f7;
+}
 
-      #todoSection input,
-      #todoSection textarea,
-      #todoSection select {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-      }
+.container2 {
+  display: flex;
+  gap: 25px;
+  max-width: 1100px;
+  margin: 40px auto;
+  height: 80vh;
+}
 
-      #todoSection button {
-        padding: 5px 15px;
-        margin-right: 10px;
-        border: none;
-        border-radius: 3px;
-        background-color: #28a745;
-        color: white;
-        cursor: pointer;
-      }
+/* left side */
+.left-card {
+  width: 350px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
 
-      #todoSection button#editBtn {
-        background-color: #007bff;
-      }
+.left-card h1 {
+  margin-bottom: 15px;
+}
 
-      #todoList {
-        list-style-type: none;
-        padding: 0;
-        height: 100%;
-        overflow: auto;
-      }
+#todoSection {
+   width: 100%;
+}
 
-      #todoList li {
-        padding: 10px;
-        border: 1px solid #ccc;
-      }
-      .child2 {
-        width: 60%;
-      }
-      #statusSelect {
-        display: none;
-      }
+#todoSection input,
+#todoSection textarea,
+#todoSection select {
+  width: inherit;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
 
-      @media (min-width: 320px) {
-        .container2 {
-          width: 90%;
-          height: 80%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          gap: 20px;
-          overflow: auto;
-        }
-        .child2 {
-          width: 100%;
-        }
-      }
-      @media (min-width: 768px) {
-        .container2 {
-          max-width: 60%;
-          overflow: auto;
-        }
-        .child2 {
-          width: 100%;
-        }
-      }
-     @media (min-width: 1100px){
-        .container2 {
-          flex-direction: row;
-          height: 70%;
-        }
-     }
-    </style>
-  </head>
-  <body>
-    <div class="container2">
-      <div>
-        <h1>To Do List</h1>
-        <div id="todoSection">
-          <input
-            type="text"
-            name="todo"
-            id="todoInput"
-            placeholder="Enter a new task"
-          />
-          <input type="datetime-local" name="date" id="dateInput" /><br />
-          <textarea
-            name="description"
-            id="descriptionInput"
-            placeholder="Description"
-          ></textarea
-          ><br />
-          <select id="statusSelect">
-            <option value="true">Completed</option>
-            <option value="false">Incomplete</option></select
-          ><br />
-          <button id="addBtn">Add Task</button>
-          <button id="editBtn">Edit Task</button>
-        </div>
-        <button id="logout">Logout</button>
-      </div>
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+}
 
+#addBtn { background: #28a745; }
+#addBtn:hover { background: #218838; }
 
-      <div id="todoSection" class="child2">
-        <ul id="todoList"></ul>
-      </div>
+#editBtn { background: #007bff; display: none; }
+#editBtn:hover { background: #0069d9; }
+
+#logout { background: #dc3545; width: 100%; margin-top: 20px; }
+#logout:hover { background: #c82333; }
+
+/* Sorting */
+.sort-section {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sort-section select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* side todos */
+.child2 {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+#todoList { list-style: none; padding: 0; margin: 0; }
+
+#todoList li {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 2px solid transparent;
+}
+
+#todoList li.completed {
+  border: 2px solid #28a745;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+#todoList li.overdue {
+  border: 2px solid #dc3545;
+  background: #e0e0e0;
+}
+
+.todo-title { font-size: 16px; font-weight: bold; }
+.todo-date { font-size: 13px; color: #777; }
+.todo-actions { margin-top: 10px; display: flex; gap: 10px; }
+
+.edit-btn {
+  background: #007bff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #dc3545;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#statusSelect { display: none; }
+
+@media(max-width: 768px) {
+  .container2 { flex-direction: column; }
+  .left-card, .child2 { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<div class="container2">
+  <!-- left side -->
+  <div class="left-card">
+    <h1>To-Do List</h1>
+
+    <div class="sort-section">
+      <label for="sortDate">Sort by Date:</label>
+      <select id="sortDate">
+        <option value="none">None</option>
+        <option value="asc">Earliest First</option>
+        <option value="desc">Latest First</option>
+      </select>
     </div>
 
-    <script src="toDo.js"></script>
-  </body>
+    <div class="sort-section">
+      <label for="sortStatus">Sort by Status:</label>
+      <select id="sortStatus">
+        <option value="none">None</option>
+        <option value="completed">Completed</option>
+        <option value="incomplete">Incomplete</option>
+      </select>
+    </div>
+
+    <div id="todoSection">
+      <input type="text" id="todoInput" placeholder="Enter task title" />
+      <input type="datetime-local" id="dateInput" />
+      <textarea id="descriptionInput" placeholder="Description"></textarea>
+      <select id="statusSelect">
+        <option value="true">Completed</option>
+        <option value="false">Incomplete</option>
+      </select>
+      <button id="addBtn">Add Task</button>
+      <button id="editBtn">Update Task</button>
+    </div>
+
+    <button id="logout">Logout</button>
+  </div>
+
+  <!-- right side -->
+  <div class="child2">
+    <ul id="todoList"></ul>
+  </div>
+</div>
+
+<script src="todo.js"></script>
+</body>
 </html>
